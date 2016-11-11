@@ -41,7 +41,7 @@ Your project deployment target must be `iOS 8.0+`
 
 ## Installation
 
-You can use it manually just draging [`DLPickerView`](https://github.com/danleechina/DLPickerView/master/) file to your project. Because it was writted by `Swift`, if you are using `Objective C`, make sure to add bridge file to your project.
+You can use it manually just draging [`DLPickerView`](https://github.com/danleechina/DLPickerView/tree/master/DLPickerView/DLPickerView) file to your project. Because it was writted by `Swift`, if you are using `Objective C`, make sure to add bridge file to your project.
 
 ## Usage
 
