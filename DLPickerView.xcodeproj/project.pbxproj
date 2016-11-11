@@ -8,20 +8,30 @@
 
 /* Begin PBXBuildFile section */
 		374CF35A1DD5ADF1008EE712 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374CF3591DD5ADF1008EE712 /* AppDelegate.swift */; };
-		374CF35C1DD5ADF1008EE712 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374CF35B1DD5ADF1008EE712 /* ViewController.swift */; };
 		374CF35F1DD5ADF1008EE712 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 374CF35D1DD5ADF1008EE712 /* Main.storyboard */; };
 		374CF3611DD5ADF1008EE712 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 374CF3601DD5ADF1008EE712 /* Assets.xcassets */; };
 		374CF3641DD5ADF1008EE712 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 374CF3621DD5ADF1008EE712 /* LaunchScreen.storyboard */; };
+		374CF3721DD5AE87008EE712 /* HomeTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374CF3711DD5AE87008EE712 /* HomeTableViewController.swift */; };
+		374CF3751DD5AE95008EE712 /* CyclePicker1ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374CF3731DD5AE95008EE712 /* CyclePicker1ViewController.swift */; };
+		374CF3761DD5AE95008EE712 /* CyclePickerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374CF3741DD5AE95008EE712 /* CyclePickerViewController.swift */; };
+		374CF3841DD5B16C008EE712 /* clockwork.wav in Resources */ = {isa = PBXBuildFile; fileRef = 374CF3811DD5B16C008EE712 /* clockwork.wav */; };
+		374CF3851DD5B16C008EE712 /* DLPickerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374CF3821DD5B16C008EE712 /* DLPickerView.swift */; };
+		374CF3861DD5B16C008EE712 /* DLTableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374CF3831DD5B16C008EE712 /* DLTableView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		374CF3561DD5ADF1008EE712 /* DLPickerView.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DLPickerView.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		374CF3591DD5ADF1008EE712 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		374CF35B1DD5ADF1008EE712 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		374CF35E1DD5ADF1008EE712 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		374CF3601DD5ADF1008EE712 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		374CF3631DD5ADF1008EE712 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		374CF3651DD5ADF1008EE712 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		374CF3711DD5AE87008EE712 /* HomeTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HomeTableViewController.swift; sourceTree = "<group>"; };
+		374CF3731DD5AE95008EE712 /* CyclePicker1ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CyclePicker1ViewController.swift; sourceTree = "<group>"; };
+		374CF3741DD5AE95008EE712 /* CyclePickerViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CyclePickerViewController.swift; sourceTree = "<group>"; };
+		374CF3811DD5B16C008EE712 /* clockwork.wav */ = {isa = PBXFileReference; lastKnownFileType = audio.wav; name = clockwork.wav; path = DLPickerView/clockwork.wav; sourceTree = "<group>"; };
+		374CF3821DD5B16C008EE712 /* DLPickerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DLPickerView.swift; path = DLPickerView/DLPickerView.swift; sourceTree = "<group>"; };
+		374CF3831DD5B16C008EE712 /* DLTableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DLTableView.swift; path = DLPickerView/DLTableView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,14 +64,35 @@
 		374CF3581DD5ADF1008EE712 /* DLPickerView */ = {
 			isa = PBXGroup;
 			children = (
-				374CF3591DD5ADF1008EE712 /* AppDelegate.swift */,
-				374CF35B1DD5ADF1008EE712 /* ViewController.swift */,
-				374CF35D1DD5ADF1008EE712 /* Main.storyboard */,
-				374CF3601DD5ADF1008EE712 /* Assets.xcassets */,
-				374CF3621DD5ADF1008EE712 /* LaunchScreen.storyboard */,
+				374CF3871DD5B172008EE712 /* DLPickerView */,
+				374CF3711DD5AE87008EE712 /* HomeTableViewController.swift */,
+				374CF3731DD5AE95008EE712 /* CyclePicker1ViewController.swift */,
+				374CF3741DD5AE95008EE712 /* CyclePickerViewController.swift */,
+				374CF3771DD5B018008EE712 /* Support Files */,
 				374CF3651DD5ADF1008EE712 /* Info.plist */,
 			);
 			path = DLPickerView;
+			sourceTree = "<group>";
+		};
+		374CF3771DD5B018008EE712 /* Support Files */ = {
+			isa = PBXGroup;
+			children = (
+				374CF3591DD5ADF1008EE712 /* AppDelegate.swift */,
+				374CF35D1DD5ADF1008EE712 /* Main.storyboard */,
+				374CF3601DD5ADF1008EE712 /* Assets.xcassets */,
+				374CF3621DD5ADF1008EE712 /* LaunchScreen.storyboard */,
+			);
+			name = "Support Files";
+			sourceTree = "<group>";
+		};
+		374CF3871DD5B172008EE712 /* DLPickerView */ = {
+			isa = PBXGroup;
+			children = (
+				374CF3811DD5B16C008EE712 /* clockwork.wav */,
+				374CF3821DD5B16C008EE712 /* DLPickerView.swift */,
+				374CF3831DD5B16C008EE712 /* DLTableView.swift */,
+			);
+			name = DLPickerView;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -124,6 +155,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				374CF3841DD5B16C008EE712 /* clockwork.wav in Resources */,
 				374CF3641DD5ADF1008EE712 /* LaunchScreen.storyboard in Resources */,
 				374CF3611DD5ADF1008EE712 /* Assets.xcassets in Resources */,
 				374CF35F1DD5ADF1008EE712 /* Main.storyboard in Resources */,
@@ -137,8 +169,12 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				374CF35C1DD5ADF1008EE712 /* ViewController.swift in Sources */,
+				374CF3751DD5AE95008EE712 /* CyclePicker1ViewController.swift in Sources */,
+				374CF3861DD5B16C008EE712 /* DLTableView.swift in Sources */,
+				374CF3761DD5AE95008EE712 /* CyclePickerViewController.swift in Sources */,
 				374CF35A1DD5ADF1008EE712 /* AppDelegate.swift in Sources */,
+				374CF3721DD5AE87008EE712 /* HomeTableViewController.swift in Sources */,
+				374CF3851DD5B16C008EE712 /* DLPickerView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -302,6 +338,7 @@
 				374CF36A1DD5ADF1008EE712 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
