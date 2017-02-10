@@ -8,18 +8,18 @@
 
 import UIKit
 
-enum DLTableViewScrollDirection {
+@objc enum DLTableViewScrollDirection : Int {
     case Vertical
     case Horizontal
 }
 
-enum DLTableViewScrollPosition : Int {
+@objc enum DLTableViewScrollPosition : Int {
     case top
     case middle
     case bottom
 }
 
-enum DLTableViewCellStyle {
+@objc enum DLTableViewCellStyle: Int {
     case Custom
     case Default
 }
@@ -128,6 +128,7 @@ class DLTableView: UIScrollView {
     var visibileCells = Array<DLTableViewCell>()
     var visibileCellsIndexPath = Array<IndexPath>()
     var selectedColor: UIColor?
+    var layout: ((DLTableView) -> Void)?
     
     fileprivate var reuseCellsSet = Set<DLTableViewCell>()
     internal var containerView = UIView()
@@ -137,7 +138,20 @@ class DLTableView: UIScrollView {
     override func layoutSubviews() {
         super.layoutSubviews()
         recenterIfNecessary()
-        tileCells(inVisibleBounds: convert(bounds, to: containerView))
+        if #available(iOS 8.0, *) {
+            tileCells(inVisibleBounds: convert(bounds, to: containerView))
+        } else {
+            // Fallback on earlier versions
+            tileCells(inVisibleBounds: CGRect(x: contentOffset.x, y: contentOffset.y, width: frame.width, height: frame.height))
+        }
+        layout?(self)
+    }
+    
+    func cellForRow(at indexPath: IndexPath) -> DLTableViewCell? {
+        if let index = visibileCellsIndexPath.index(of: indexPath) {
+            return visibileCells[index]
+        }
+        return nil
     }
     
     fileprivate func recenterIfNecessary() {
@@ -153,13 +167,24 @@ class DLTableView: UIScrollView {
         if distanceFromCenterXOrY > (contentLength / 4) {
             contentOffset = scrollDirection == .Vertical ? CGPoint(x: currentOffset.x, y: centerOffsetXOrY) : CGPoint(x: centerOffsetXOrY, y: currentOffset.y)
             for cell in visibileCells {
-                var center = containerView.convert(cell.center, to: self)
+                var center = CGPoint(x: 0, y: 0)
+                if #available(iOS 8.0, *) {
+                    center = containerView.convert(cell.center, to: self)
+                } else {
+                    // Fallback on earlier versions
+                    center = CGPoint(x: containerView.center.x + cell.center.x, y: containerView.center.y + cell.center.y)
+                }
                 if scrollDirection == .Vertical {
                     center.y += (centerOffsetXOrY - currentOffset.y)
                 } else {
                     center.x += (centerOffsetXOrY - currentOffset.x)
                 }
-                cell.center = convert(center, to: containerView)
+                if #available(iOS 8.0, *) {
+                    cell.center = convert(center, to: containerView)
+                } else {
+                    // Fallback on earlier versions
+                    cell.center = CGPoint(x: center.x - containerView.center.x, y: center.y - containerView.center.y)
+                }
             }
         }
     }
@@ -350,8 +375,8 @@ class DLTableView: UIScrollView {
         }  else {
             // ds should not be nil
             assert(false, "DLTableViewDataSource should not be nil")
-            return DLTableViewCell()
         }
+        return DLTableViewCell()
     }
     
     func reloadViews() {
