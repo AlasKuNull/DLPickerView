@@ -86,6 +86,9 @@ import AVFoundation
     
     // return the scale value for center indicator view in the component, or you can simply set magnifyingViewScale for all components
     @objc optional func pickerView(_ pickerView: DLPickerView, scaleValueForCenterIndicatorInComponent component: Int) -> Double
+    
+    @objc optional func pickerView(_ pickerView: DLPickerView, componentDidScroll component: Int) -> Void
+    @objc optional func pickerView(_ pickerView: DLPickerView, centerRowDidChangedForComponent component: Int, toRowNumber row: Int) -> Void
 }
 
 // layout style for components
@@ -590,14 +593,18 @@ class DLPickerView : UIView {
                         return false
                     }
                     let centerIndexPath = tableView.visibileCellsIndexPath[minIndex]
-                    if centerIndexPath.row <  range.location {
-                        if needScrollWhenOut {
+                    if centerIndexPath.row < range.location && needScrollWhenOut {
+                        if range.location - centerIndexPath.row < self.numberOfRows(inComponent: scrollView.tag) - (range.location + range.length) + centerIndexPath.row {
                             tableView.scrollToRow(at: IndexPath.init(row: range.location, section: 0), at: .middle, animated: true)
+                        } else {
+                            tableView.scrollToRow(at: IndexPath.init(row: range.location + range.length - 1, section: 0), at: .middle, animated: true)
                         }
                         return true
-                    } else if centerIndexPath.row > range.location + range.length - 1 {
-                        if needScrollWhenOut {
+                    } else if centerIndexPath.row > range.location + range.length - 1 && needScrollWhenOut {
+                        if centerIndexPath.row - range.location - range.length - 1 <  self.numberOfRows(inComponent: scrollView.tag) - 1 - centerIndexPath.row + range.location {
                             tableView.scrollToRow(at: IndexPath.init(row: range.location + range.length - 1, section: 0), at: .middle, animated: true)
+                        } else {
+                            tableView.scrollToRow(at: IndexPath.init(row: range.location, section: 0), at: .middle, animated: true)
                         }
                         return true
                     }
@@ -678,7 +685,7 @@ class DLPickerView : UIView {
     }
     
     fileprivate func triggerSelectedActionIfNeeded(tableView: DLTableView) {
-        DLPickerView.cancelPreviousPerformRequests(withTarget: self)
+        DLPickerView.cancelPreviousPerformRequests(withTarget: self, selector: #selector(triggerSelectedAcionRightAway(tableView:)), object: tableView)
         self.perform(#selector(triggerSelectedAcionRightAway(tableView:)), with: tableView, afterDelay: 0.5)
     }
     
@@ -804,6 +811,7 @@ extension DLPickerView: DLTableViewDelegate, DLTableViewDataSource {
     }
     
     // MARK:- UIScrollViewDelegate
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let tableView = scrollView as! DLTableView
         selectionIndicatorViews[tableView.tag].setNeedsDisplay()
@@ -816,6 +824,10 @@ extension DLPickerView: DLTableViewDelegate, DLTableViewDataSource {
             playSoundEffect()
             lastCenterRows[tableView.tag] = centerIndexPath.row
         }
+        // scrollview will stop scrolling right away when scrollview disappeared from screen.
+        doSomeEndWork(scrollView: scrollView)
+        self.delegate?.pickerView?(self, componentDidScroll: scrollView.tag)
+        self.delegate?.pickerView?(self, centerRowDidChangedForComponent: scrollView.tag, toRowNumber: centerIndexPath.row)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
@@ -824,19 +836,23 @@ extension DLPickerView: DLTableViewDelegate, DLTableViewDataSource {
     }
     
     func scrollViewWillEndDragging(_ scrollView: UIScrollView, withVelocity velocity: CGPoint, targetContentOffset: UnsafeMutablePointer<CGPoint>) {
-     //   self.isUserDraggingComponents[scrollView.tag] = false
+        //   self.isUserDraggingComponents[scrollView.tag] = false
+//        if velocity.x == 0 && velocity.y == 0 {
+//            doSomeEndWork(scrollView: scrollView)
+//        }
     }
+    
     
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         self.isUserDraggingComponents[scrollView.tag] = false
-        if !decelerate {
-            doSomeEndWork(scrollView: scrollView)
-        }
+//        if !decelerate {
+//            doSomeEndWork(scrollView: scrollView)
+//        }
     }
     
-    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-        doSomeEndWork(scrollView: scrollView)
-    }
+//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
+//        doSomeEndWork(scrollView: scrollView)
+//    }
     
     func scrollViewDidEndScrollingAnimation(_ scrollView: UIScrollView) {
         if !self.hasMakeSureNotOutOfRange[scrollView.tag]
@@ -846,11 +862,18 @@ extension DLPickerView: DLTableViewDelegate, DLTableViewDataSource {
         }
         
         self.hasMakeSureNotOutOfRange[scrollView.tag] = false
+        
         makeSureIndicatorViewsShowRight(delay: 0.05)
-        scrollStartOrEndAction?(scrollView.tag, false)
+        // sometime need make sure again.
+//        doSomeEndWork(scrollView: scrollView)
     }
     
     func doSomeEndWork(scrollView: UIScrollView) {
+        DLPickerView.cancelPreviousPerformRequests(withTarget: self, selector: #selector(triggerDoSomeEndWork(withScrollView:)), object: scrollView)
+        self.perform(#selector(triggerDoSomeEndWork(withScrollView:)), with: scrollView, afterDelay: 0.25)
+    }
+    
+    func triggerDoSomeEndWork(withScrollView scrollView: UIScrollView) {
         if !self.hasMakeSureNotOutOfRange[scrollView.tag]
             && makeSureNotScrollOutOfRange(scrollView: scrollView, needScrollWhenOut: true) {
             self.hasMakeSureNotOutOfRange[scrollView.tag] = true
