@@ -686,7 +686,7 @@ class DLPickerView : UIView {
     
     fileprivate func triggerSelectedActionIfNeeded(tableView: DLTableView) {
         DLPickerView.cancelPreviousPerformRequests(withTarget: self, selector: #selector(triggerSelectedAcionRightAway(tableView:)), object: tableView)
-        self.perform(#selector(triggerSelectedAcionRightAway(tableView:)), with: tableView, afterDelay: 0.5)
+        self.perform(#selector(triggerSelectedAcionRightAway(tableView:)), with: tableView, afterDelay: 0.5, inModes: [RunLoopMode.commonModes])
     }
     
     @objc fileprivate func triggerSelectedAcionRightAway(tableView: DLTableView) {
@@ -870,7 +870,7 @@ extension DLPickerView: DLTableViewDelegate, DLTableViewDataSource {
     
     func doSomeEndWork(scrollView: UIScrollView) {
         DLPickerView.cancelPreviousPerformRequests(withTarget: self, selector: #selector(triggerDoSomeEndWork(withScrollView:)), object: scrollView)
-        self.perform(#selector(triggerDoSomeEndWork(withScrollView:)), with: scrollView, afterDelay: 0.25)
+        self.perform(#selector(triggerDoSomeEndWork(withScrollView:)), with: scrollView, afterDelay: 0.25, inModes: [RunLoopMode.commonModes])
     }
     
     func triggerDoSomeEndWork(withScrollView scrollView: UIScrollView) {
