@@ -237,6 +237,12 @@ class DLPickerView : UIView {
         }
     }
     
+    var disableScrollOfComponents = [Bool]() {
+        didSet {
+            // TODO
+        }
+    }
+    
     override var backgroundColor: UIColor? {
         didSet {
             self.selectionIndicatorViews.forEach({$0.backgroundColor = backgroundColor;})
