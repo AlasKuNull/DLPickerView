@@ -203,7 +203,7 @@ class DLPickerView : UIView {
                 self.transform = CGAffineTransform(rotationAngle: 0)
                 break
             case .Vertical:
-                self.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI/2 * 3))
+                self.transform = CGAffineTransform(rotationAngle: CGFloat(CGFloat.pi/2 * 3))
                 break
             }
         }
@@ -234,12 +234,6 @@ class DLPickerView : UIView {
                 AudioServicesCreateSystemSoundID(surl as CFURL, &aSound)
                 DLPickerView.mySound = aSound
             }
-        }
-    }
-    
-    var disableScrollOfComponents = [Bool]() {
-        didSet {
-            // TODO
         }
     }
     
@@ -311,6 +305,14 @@ class DLPickerView : UIView {
             return -1
         }
         return self.lastSelectedRow[component]
+    }
+    
+    // returns last center row
+    func lastCenterRow(inComponent component: Int) -> Int{
+        if self.lastCenterRows.count <= component {
+            return -1
+        }
+        return self.lastCenterRows[component]
     }
     
     func dequeueReusableCell(forComponent component: Int, withIdentifier identifier: String) -> DLPickerViewCell? {
@@ -684,7 +686,7 @@ class DLPickerView : UIView {
             } else {
                 var rotationPerspectiveTrans = CATransform3DIdentity
                 rotationPerspectiveTrans.m34 = -1 / 500
-                rotationPerspectiveTrans = CATransform3DRotate(rotationPerspectiveTrans, disPercent * CGFloat(M_PI/180 * 65), 1, 0, 0)
+                rotationPerspectiveTrans = CATransform3DRotate(rotationPerspectiveTrans, disPercent * CGFloat(CGFloat.pi/180 * 65), 1, 0, 0)
                 cell.containerView.layer.transform = rotationPerspectiveTrans
             }
         }
@@ -705,6 +707,7 @@ class DLPickerView : UIView {
             && !isSelectedOutOfRangeOfIndexPath(tableView: tableView, indexPath: indexPath) {
             self.delegate?.pickerView?(self, didSelectRow: indexPath.row, inComponent: tableView.tag)
             self.lastSelectedRow[tableView.tag] = indexPath.row
+            self.lastCenterRows[tableView.tag] = indexPath.row
         }
     }
     
@@ -799,7 +802,7 @@ extension DLPickerView: DLTableViewDelegate, DLTableViewDataSource {
             break
         case .Vertical:
             //temp!.titleLabel.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI/2))
-            cell?.containerView.subviews.forEach({$0.transform = CGAffineTransform(rotationAngle: CGFloat(M_PI/2));})
+            cell?.containerView.subviews.forEach({$0.transform = CGAffineTransform(rotationAngle: CGFloat(CGFloat.pi/2));})
             break
         }
     }

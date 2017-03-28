@@ -695,9 +695,11 @@ class DLTableView: UIScrollView {
             }
         }
         
-        let headIndexPath = visibileCellsIndexPath.first!
-        let lastIndexPath = visibileCellsIndexPath.last!
-//        let isHeaderGreater = headIndexPath.row > lastIndexPath.row
+        guard let headIndexPath = visibileCellsIndexPath.first,
+            let lastIndexPath = visibileCellsIndexPath.last else {
+                // avoid crash
+                return CGPoint(x: 0, y: 0)
+        }
         let rowsCount = numberOfRows(inSection: indexPath.section)
         
         let distance1FromHead = abs(indexPath.row - headIndexPath.row)
