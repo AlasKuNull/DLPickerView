@@ -41,7 +41,7 @@ import UIKit
     // and you should implement this method if you are using cyclable table view.
     @objc
     optional func tableView(_ tableView: DLTableView, didSelectRowAt indexPath: IndexPath, withInternalIndex index: Int)
-
+    
 }
 
 protocol DLTableViewDataSource: class {
@@ -124,7 +124,7 @@ class DLTableViewCell: UIView {
  
  */
 class DLTableView: UIScrollView {
-
+    
     var visibileCells = Array<DLTableViewCell>()
     var visibileCellsIndexPath = Array<IndexPath>()
     var selectedColor: UIColor?
@@ -201,7 +201,7 @@ class DLTableView: UIScrollView {
         
         var lastCell = visibileCells.last!
         var nextEdge = scrollDirection == .Vertical ? lastCell.frame.maxY : lastCell.frame.maxX
-
+        
         while nextEdge < maxXOrY {
             nextEdge = placeNewCell(onNextEdge: nextEdge)
         }
@@ -526,18 +526,18 @@ class DLTableView: UIScrollView {
                 if !cell.frame.contains(point) {
                     UIView.animate(withDuration: 0.5, animations: {
                         cell.selectedBackgroundColorView.alpha = 0
-                        }, completion: { (comp) in
-                            cell.selectedBackgroundColorView.isHidden = true
-                            cell.selectedBackgroundColorView.alpha = 1
+                    }, completion: { (comp) in
+                        cell.selectedBackgroundColorView.isHidden = true
+                        cell.selectedBackgroundColorView.alpha = 1
                     })
                     pressedCell = nil
                 } else if let ltp = lastTouchPoint {
                     if (self.scrollDirection == .Vertical ? fabs(ltp.y - point.y) > 5 : fabs(ltp.x - point.x) > 5) {
                         UIView.animate(withDuration: 0.5, animations: {
                             cell.selectedBackgroundColorView.alpha = 0
-                            }, completion: { (comp) in
-                                cell.selectedBackgroundColorView.isHidden = true
-                                cell.selectedBackgroundColorView.alpha = 1
+                        }, completion: { (comp) in
+                            cell.selectedBackgroundColorView.isHidden = true
+                            cell.selectedBackgroundColorView.alpha = 1
                         })
                         pressedCell = nil
                     }
@@ -586,9 +586,9 @@ class DLTableView: UIScrollView {
             if animated {
                 UIView.animate(withDuration: 0.5, animations: {
                     cell.selectedBackgroundColorView.alpha = 0
-                    }, completion: { (comp) in
-                        cell.selectedBackgroundColorView.isHidden = true
-                        cell.selectedBackgroundColorView.alpha = 1
+                }, completion: { (comp) in
+                    cell.selectedBackgroundColorView.isHidden = true
+                    cell.selectedBackgroundColorView.alpha = 1
                 })
             }
         }
